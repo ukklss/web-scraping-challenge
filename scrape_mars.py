@@ -36,18 +36,12 @@ def scrape():
   mars_weather = mars_tweets_soup.find('p', class_="TweetTextSize TweetTextSize--normal js-tweet-text tweet-text").text.strip('pic.twitter.com/ihFGVkib6L')
 
   # Mars Fact Table
-  # mars_facts_url = 'https://space-facts.com/mars/'
-  # tables = pd.read_html(mars_facts_url)
+  mars_facts_url = 'https://space-facts.com/mars/'
+  tables = pd.read_html(mars_facts_url)
 
-  # mars_table_facts = tables[0]
-  # mars_table_facts = mars_table_facts.rename(columns={0: "Description", 1: "Value"}).set_index("Description")
-  # mars_html = mars_table_facts.to_html(index=False).replace('\n', '')
-  url = "https://space-facts.com/mars/"
-
-  mars_facts_df = pd.read_html(url)[0]
-  mars_facts_df = mars_facts_df.rename(index=str, columns={0: "Description", 1: "Value"})
-  mars_facts_html = mars_facts_df.to_html(index='False')
-
+  mars_table_facts = tables[0]
+  mars_table_facts = mars_table_facts.rename(columns={0: "Description", 1: "Value"}).set_index("Description")
+  mars_table_html = mars_table_facts.to_html(index=False).replace('\n', '')
 
   # Mars Hemispheres
   hem_url = 'https://astrogeology.usgs.gov/search/results?q=hemisphere+enhanced&k1=target&v1=Mars'
@@ -85,11 +79,11 @@ def scrape():
 
   # Dictionary
   mars_dict = {
-    "news_t": news_title,
+    "news_title": news_title,
     # "news_par": news_par,
     "featured_image_url": featured_image_url,
     "mars_weather": mars_weather,
-    "mars_facts_html": mars_facts_html,
+    "mars_table_html": mars_table_html,
     "hemisphere_image_urls": hemisphere_image_urls
 }
 
