@@ -14,7 +14,7 @@ def scrape():
   html = browser.html
   soup = bs(html, 'html.parser')
 
-  news_t = soup.find('div', class_="content_title").text
+  news_title = soup.find('div', class_="content_title").text
   # news_par = soup.find('div', class_="article_teaser_body").text
 
   # JPL Mars Space Images
@@ -85,7 +85,7 @@ def scrape():
 
   # Dictionary
   mars_dict = {
-    "news_t": news_t,
+    "news_t": news_title,
     # "news_par": news_par,
     "featured_image_url": featured_image_url,
     "mars_weather": mars_weather,
