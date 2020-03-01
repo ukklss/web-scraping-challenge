@@ -18,11 +18,12 @@ def index():
 def scrape():
 
     mars_dict = scrape_mars.scrape()
+    print(mars_dict)
 
     mongo.db.collection.update({}, mars_dict, upsert=True)
 
 
-    return redirect("/")
+    return redirect("/", code=302)
 
 
 if __name__ == "__main__":

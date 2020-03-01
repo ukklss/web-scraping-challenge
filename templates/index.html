@@ -28,6 +28,7 @@
         <div class = "col-md-12">
           <h2>Latest Mars News:</h2>
           <h5>{{ mars_index.news_title }} </h5>
+          <h6>{{ mars_index.news_par }}</h6>
           <hr>
         </div>
       <div class = "col-md-12">  
@@ -46,7 +47,7 @@
           <h2>Mars Facts:</h2>
         </div>
         <div class = "col-md-5"> 
-          <p>{{mars_index.mars_table_html}}</p>
+          {{ mars_index.mars_table_html | safe }}
           <hr>
         </div>
       </div>

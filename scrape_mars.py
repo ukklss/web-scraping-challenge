@@ -14,8 +14,13 @@ def scrape():
   html = browser.html
   soup = bs(html, 'html.parser')
 
-  news_title = soup.find('div', class_="content_title").text
-  # news_par = soup.find('div', class_="article_teaser_body").text
+  # news_title = soup.find('div', class_="content_title").text
+  news_title = soup.find('div', class_="content_title")
+  news_title2 = news_title.find('a')
+  news_title_text = news_title2.text
+  # print(news_title_text)
+  news_par = soup.find('div', class_="article_teaser_body").text
+  # news_par_final = news_par.text
 
   # JPL Mars Space Images
   featured_url = 'https://www.jpl.nasa.gov/spaceimages/?search=&category=Mars'
@@ -33,7 +38,7 @@ def scrape():
   m_response = requests.get(m_tweets).text 
   mars_tweets_soup = bs(m_response, 'html.parser')
 
-  mars_weather = mars_tweets_soup.find('p', class_="TweetTextSize TweetTextSize--normal js-tweet-text tweet-text").text.strip('pic.twitter.com/ihFGVkib6L')
+  mars_weather = mars_tweets_soup.find('p', class_="TweetTextSize TweetTextSize--normal js-tweet-text tweet-text").text.split('pic.twitter.com/')
 
   # Mars Fact Table
   mars_facts_url = 'https://space-facts.com/mars/'
@@ -41,7 +46,7 @@ def scrape():
 
   mars_table_facts = tables[0]
   mars_table_facts = mars_table_facts.rename(columns={0: "Description", 1: "Value"}).set_index("Description")
-  mars_table_html = mars_table_facts.to_html(index=False).replace('\n', '')
+  mars_table_html = mars_table_facts.to_html().replace('\n', '').strip(";(')")
 
   # Mars Hemispheres
   hem_url = 'https://astrogeology.usgs.gov/search/results?q=hemisphere+enhanced&k1=target&v1=Mars'
@@ -76,11 +81,12 @@ def scrape():
   # End
   browser.quit()
 
+  # test = "test"
 
   # Dictionary
   mars_dict = {
-    "news_title": news_title,
-    # "news_par": news_par,
+    "news_title": news_title_text,
+    "news_par": news_par,
     "featured_image_url": featured_image_url,
     "mars_weather": mars_weather,
     "mars_table_html": mars_table_html,
